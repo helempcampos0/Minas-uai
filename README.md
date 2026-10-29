@@ -13,6 +13,6 @@ Estoque = estoque inicial − quantidades vendidas (lançamentos de **entrada** 
 
 ## Publicação
 
-GitHub Pages, a partir da branch `main` (pasta raiz).
+Netlify (https://minasuai.netlify.app), ligado a este repositório: cada envio para a branch `main` publica o site sozinho.
 No Supabase, em Authentication → URL Configuration, o "Site URL" deve ser o endereço do site,
 para o link de login do e-mail voltar para o app.
