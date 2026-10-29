@@ -25,6 +25,7 @@ function mostrar(tela) {
   for (const t of ['tela-login', 'tela-sem-acesso', 'tela-app']) $(t).hidden = t !== tela;
   $('abas').hidden = tela !== 'tela-app';
   $('btn-sair').hidden = tela === 'tela-login';
+  $('btn-senha').hidden = tela !== 'tela-app';
 }
 
 function msg(id, texto, erro = false) {
@@ -36,13 +37,21 @@ function msg(id, texto, erro = false) {
 
 $('form-login').addEventListener('submit', async (e) => {
   e.preventDefault();
-  msg('login-msg', 'Enviando…');
-  const { error } = await db.auth.signInWithOtp({
+  msg('login-msg', 'Entrando…');
+  const { error } = await db.auth.signInWithPassword({
     email: $('login-email').value.trim(),
-    options: { emailRedirectTo: location.origin + location.pathname },
+    password: $('login-senha').value,
   });
-  if (error) msg('login-msg', 'Erro: ' + error.message, true);
-  else msg('login-msg', 'Pronto! Abra seu e-mail e toque no link para entrar.');
+  if (error) msg('login-msg', 'E-mail ou senha errados.', true);
+  else msg('login-msg', '');
+});
+
+$('btn-senha').addEventListener('click', async () => {
+  const nova = prompt('Digite a nova senha (mínimo 6 letras ou números):');
+  if (!nova) return;
+  if (nova.length < 6) { alert('A senha precisa ter pelo menos 6 caracteres.'); return; }
+  const { error } = await db.auth.updateUser({ password: nova });
+  alert(error ? 'Erro: ' + error.message : 'Senha trocada!');
 });
 
 $('btn-sair').addEventListener('click', async () => {

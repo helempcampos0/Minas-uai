@@ -52,7 +52,7 @@ h3 { margin: 20px 0 8px; font-size: 16px; }
 
 form label { display: block; margin-bottom: 12px; font-size: 14px; color: var(--suave); }
 form label.check { display: flex; gap: 8px; align-items: center; color: var(--texto); font-size: 16px; }
-input[type=text], input[type=email], input[type=number], input[type=date], select {
+input[type=text], input[type=email], input[type=password], input[type=number], input[type=date], select {
   display: block; width: 100%; margin-top: 4px; padding: 12px;
   font-size: 16px; border: 1px solid var(--borda); border-radius: 8px;
   background: var(--fundo); color: var(--texto);

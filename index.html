@@ -14,17 +14,20 @@
 <body>
   <header class="topo">
     <h1>Carvão Minas Uai</h1>
-    <button id="btn-sair" class="link" hidden>Sair</button>
+    <div>
+      <button id="btn-senha" class="link" hidden>Trocar senha</button>
+      <button id="btn-sair" class="link" hidden>Sair</button>
+    </div>
   </header>
 
   <!-- Login -->
   <section id="tela-login" class="tela" hidden>
     <div class="cartao">
       <h2>Entrar</h2>
-      <p class="ajuda">Digite seu e-mail. Vamos mandar um link para você entrar.</p>
       <form id="form-login">
         <input type="email" id="login-email" placeholder="seu@email.com" required autocomplete="email">
-        <button type="submit">Enviar link</button>
+        <input type="password" id="login-senha" placeholder="senha" required autocomplete="current-password">
+        <button type="submit">Entrar</button>
       </form>
       <p id="login-msg" class="msg"></p>
     </div>
