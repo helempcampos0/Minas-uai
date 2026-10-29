@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1f1f1f">
+  <title>Carvão Minas Uai</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+</head>
+<body>
+  <header class="topo">
+    <h1>Carvão Minas Uai</h1>
+    <button id="btn-sair" class="link" hidden>Sair</button>
+  </header>
+
+  <!-- Login -->
+  <section id="tela-login" class="tela" hidden>
+    <div class="cartao">
+      <h2>Entrar</h2>
+      <p class="ajuda">Digite seu e-mail. Vamos mandar um link para você entrar.</p>
+      <form id="form-login">
+        <input type="email" id="login-email" placeholder="seu@email.com" required autocomplete="email">
+        <button type="submit">Enviar link</button>
+      </form>
+      <p id="login-msg" class="msg"></p>
+    </div>
+  </section>
+
+  <!-- Sem acesso -->
+  <section id="tela-sem-acesso" class="tela" hidden>
+    <div class="cartao">
+      <h2>Sem acesso</h2>
+      <p>O e-mail <b id="sem-acesso-email"></b> não está cadastrado como membro.</p>
+      <p class="ajuda">Peça para alguém da equipe incluir você.</p>
+    </div>
+  </section>
+
+  <!-- App -->
+  <main id="tela-app" class="tela" hidden>
+    <div class="mes">
+      <button class="link" data-mes="-1" aria-label="Mês anterior">‹</button>
+      <span id="mes-atual"></span>
+      <button class="link" data-mes="1" aria-label="Próximo mês">›</button>
+    </div>
+
+    <!-- Resumo -->
+    <section id="aba-resumo" class="aba">
+      <div class="grade">
+        <div class="kpi"><small>Entradas</small><b id="k-entradas"></b></div>
+        <div class="kpi"><small>Saídas</small><b id="k-saidas"></b></div>
+        <div class="kpi destaque"><small>Saldo do mês</small><b id="k-saldo"></b></div>
+        <div class="kpi"><small>A receber</small><b id="k-receber"></b></div>
+        <div class="kpi"><small>A pagar</small><b id="k-pagar"></b></div>
+        <div class="kpi"><small>Sacos vendidos</small><b id="k-vendidos"></b></div>
+      </div>
+      <h3>Estoque agora</h3>
+      <ul id="lista-estoque" class="lista"></ul>
+    </section>
+
+    <!-- Lançar -->
+    <section id="aba-lancar" class="aba" hidden>
+      <form id="form-lanc" class="cartao">
+        <input type="hidden" id="lanc-id">
+        <div class="seg">
+          <label><input type="radio" name="tipo" value="entrada" checked><span>Entrada / Venda</span></label>
+          <label><input type="radio" name="tipo" value="saida"><span>Saída / Despesa</span></label>
+        </div>
+        <label>Produto (opcional)
+          <select id="lanc-produto"><option value="">— nenhum —</option></select>
+        </label>
+        <label id="campo-qtd" hidden>Quantidade
+          <input type="number" id="lanc-qtd" inputmode="decimal" min="0" step="any" value="0">
+        </label>
+        <label>Valor (R$)
+          <input type="number" id="lanc-valor" inputmode="decimal" min="0" step="0.01" required>
+        </label>
+        <label>Descrição
+          <input type="text" id="lanc-desc" placeholder="Ex.: venda para o Zé">
+        </label>
+        <label>Categoria
+          <input type="text" id="lanc-cat" list="categorias" placeholder="Ex.: venda, frete, combustível">
+          <datalist id="categorias"></datalist>
+        </label>
+        <label>Data
+          <input type="date" id="lanc-data" required>
+        </label>
+        <label class="check"><input type="checkbox" id="lanc-pago" checked> Já foi pago</label>
+        <button type="submit" id="btn-salvar-lanc">Salvar</button>
+        <button type="button" id="btn-cancelar-lanc" class="secundario" hidden>Cancelar edição</button>
+        <p id="lanc-msg" class="msg"></p>
+      </form>
+    </section>
+
+    <!-- Histórico -->
+    <section id="aba-historico" class="aba" hidden>
+      <ul id="lista-lanc" class="lista"></ul>
+    </section>
+
+    <!-- Produtos -->
+    <section id="aba-produtos" class="aba" hidden>
+      <form id="form-prod" class="cartao">
+        <input type="hidden" id="prod-id">
+        <label>Nome<input type="text" id="prod-nome" required placeholder="Ex.: Carvão 3kg"></label>
+        <div class="linha">
+          <label>Preço (R$)<input type="number" id="prod-preco" inputmode="decimal" min="0" step="0.01" value="0"></label>
+          <label>Unidade<input type="text" id="prod-unidade" value="saco"></label>
+        </div>
+        <label class="check"><input type="checkbox" id="prod-controla" checked> Controlar estoque</label>
+        <label>Estoque inicial<input type="number" id="prod-estoque" inputmode="decimal" step="any" value="0"></label>
+        <button type="submit">Salvar produto</button>
+        <button type="button" id="btn-cancelar-prod" class="secundario" hidden>Cancelar edição</button>
+        <p id="prod-msg" class="msg"></p>
+      </form>
+      <ul id="lista-prod" class="lista"></ul>
+    </section>
+  </main>
+
+  <nav id="abas" class="abas" hidden>
+    <button data-aba="resumo" class="ativa">Resumo</button>
+    <button data-aba="lancar">Lançar</button>
+    <button data-aba="historico">Histórico</button>
+    <button data-aba="produtos">Produtos</button>
+  </nav>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+:root {
+  --fundo: #f4f2ef;
+  --cartao: #ffffff;
+  --texto: #1f1f1f;
+  --suave: #6b6660;
+  --borda: #ddd8d1;
+  --marca: #c2410c;
+  --verde: #15803d;
+  --vermelho: #b91c1c;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fundo: #141414;
+    --cartao: #1f1f1f;
+    --texto: #f1efec;
+    --suave: #a39d95;
+    --borda: #34312d;
+    --marca: #f97316;
+    --verde: #4ade80;
+    --vermelho: #f87171;
+  }
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--fundo);
+  color: var(--texto);
+  font-size: 16px;
+  padding-bottom: calc(72px + env(safe-area-inset-bottom));
+}
+[hidden] { display: none !important; }
+
+.topo {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px; background: #1f1f1f; color: #fff;
+}
+.topo h1 { font-size: 18px; margin: 0; }
+.topo .link { color: #fff; }
+
+.tela { padding: 16px; max-width: 640px; margin: 0 auto; }
+.cartao {
+  background: var(--cartao); border: 1px solid var(--borda);
+  border-radius: 12px; padding: 16px; margin-bottom: 16px;
+}
+h2 { margin: 0 0 8px; font-size: 20px; }
+h3 { margin: 20px 0 8px; font-size: 16px; }
+.ajuda { color: var(--suave); margin-top: 0; }
+.msg { min-height: 1.2em; margin: 8px 0 0; color: var(--suave); }
+.msg.erro { color: var(--vermelho); }
+
+form label { display: block; margin-bottom: 12px; font-size: 14px; color: var(--suave); }
+form label.check { display: flex; gap: 8px; align-items: center; color: var(--texto); font-size: 16px; }
+input[type=text], input[type=email], input[type=number], input[type=date], select {
+  display: block; width: 100%; margin-top: 4px; padding: 12px;
+  font-size: 16px; border: 1px solid var(--borda); border-radius: 8px;
+  background: var(--fundo); color: var(--texto);
+}
+input[type=checkbox] { width: 20px; height: 20px; }
+button {
+  font: inherit; cursor: pointer; border: 0; border-radius: 8px;
+  padding: 12px 16px; background: var(--marca); color: #fff; width: 100%;
+  font-weight: 600;
+}
+button.secundario { background: transparent; color: var(--texto); border: 1px solid var(--borda); margin-top: 8px; }
+button.link { background: none; color: var(--marca); width: auto; padding: 4px 8px; font-weight: 600; }
+#form-login input { margin-bottom: 12px; }
+
+.linha { display: flex; gap: 12px; }
+.linha > label { flex: 1; }
+
+.seg { display: flex; gap: 8px; margin-bottom: 12px; }
+.seg label { flex: 1; margin: 0; }
+.seg input { position: absolute; opacity: 0; }
+.seg span {
+  display: block; text-align: center; padding: 10px; border-radius: 8px;
+  border: 1px solid var(--borda); color: var(--texto); font-size: 14px;
+}
+.seg input:checked + span { background: var(--texto); color: var(--fundo); border-color: var(--texto); }
+
+.mes { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 12px; font-weight: 600; }
+.mes .link { font-size: 24px; }
+
+.grade { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.kpi { background: var(--cartao); border: 1px solid var(--borda); border-radius: 12px; padding: 12px; }
+.kpi small { display: block; color: var(--suave); font-size: 13px; }
+.kpi b { font-size: 18px; }
+.kpi.destaque { border-color: var(--marca); }
+
+.lista { list-style: none; margin: 0; padding: 0; }
+.lista li {
+  background: var(--cartao); border: 1px solid var(--borda); border-radius: 10px;
+  padding: 12px; margin-bottom: 8px; display: flex; gap: 8px; align-items: center;
+}
+.lista .info { flex: 1; min-width: 0; }
+.lista .info small { display: block; color: var(--suave); }
+.lista .valor { font-weight: 700; white-space: nowrap; }
+.lista .acoes { display: flex; flex-direction: column; }
+.lista .vazio { justify-content: center; color: var(--suave); }
+.pos { color: var(--verde); }
+.neg { color: var(--vermelho); }
+.etiqueta { font-size: 12px; padding: 2px 6px; border-radius: 6px; border: 1px solid var(--vermelho); color: var(--vermelho); margin-left: 4px; }
+
+.abas {
+  position: fixed; left: 0; right: 0; bottom: 0; display: flex;
+  background: var(--cartao); border-top: 1px solid var(--borda);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.abas button { flex: 1; background: none; color: var(--suave); border-radius: 0; padding: 16px 4px; font-size: 14px; }
+.abas button.ativa { color: var(--marca); }

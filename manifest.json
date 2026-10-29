@@ -1,0 +1,9 @@
+{
+  "name": "Carvão Minas Uai",
+  "short_name": "Minas Uai",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4f2ef",
+  "theme_color": "#1f1f1f",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
