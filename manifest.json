@@ -1,9 +1,9 @@
 {
-  "id": "/",
+  "id": "./",
   "name": "Carvão Minas Uai",
   "short_name": "Minas Uai",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#1f1f1f",
