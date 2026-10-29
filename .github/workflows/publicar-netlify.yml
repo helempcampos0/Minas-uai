@@ -1,0 +1,29 @@
+# Publica o site no Netlify (projeto minasuai) usando o link de envio gerado pelo conector do Netlify.
+name: Publicar no Netlify
+
+on:
+  workflow_dispatch:
+    inputs:
+      proxy_path:
+        description: Link de envio gerado pelo conector do Netlify
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Esconder o link de envio nos logs
+        env:
+          PROXY_PATH: ${{ inputs.proxy_path }}
+        run: echo "::add-mask::$PROXY_PATH"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Enviar para o Netlify
+        env:
+          PROXY_PATH: ${{ inputs.proxy_path }}
+        run: npx -y @netlify/mcp@latest --site-id 0d6e821d-cbf2-46a1-b3e1-54605e64ec45 --proxy-path "$PROXY_PATH"
