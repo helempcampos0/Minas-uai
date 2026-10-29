@@ -19,6 +19,13 @@ const hoje = () => {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 };
 const dataBR = (iso) => iso.split('-').reverse().join('/');
+// O Supabase pede e-mail; quem não digita um e-mail entra com um usuário, guardado como usuario@minasuai.app.
+const DOMINIO_USUARIO = '@minasuai.app';
+const paraEmail = (u) => {
+  u = u.trim().toLowerCase();
+  return u.includes('@') ? u : u + DOMINIO_USUARIO;
+};
+const paraUsuario = (email) => email.endsWith(DOMINIO_USUARIO) ? email.slice(0, -DOMINIO_USUARIO.length) : email;
 const chaveMes = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
 
 function mostrar(tela) {
@@ -39,10 +46,10 @@ $('form-login').addEventListener('submit', async (e) => {
   e.preventDefault();
   msg('login-msg', 'Entrando…');
   const { error } = await db.auth.signInWithPassword({
-    email: $('login-email').value.trim(),
+    email: paraEmail($('login-usuario').value),
     password: $('login-senha').value,
   });
-  if (error) msg('login-msg', 'E-mail ou senha errados.', true);
+  if (error) msg('login-msg', 'Usuário ou senha errados.', true);
   else msg('login-msg', '');
 });
 
@@ -72,7 +79,7 @@ async function entrar(sessao) {
   const email = sessao.user.email;
   const { data, error } = await db.from('membros').select('email').limit(1);
   if (error || !data.length) {
-    $('sem-acesso-email').textContent = email;
+    $('sem-acesso-email').textContent = paraUsuario(email);
     mostrar('tela-sem-acesso');
     return;
   }

@@ -25,7 +25,7 @@
     <div class="cartao">
       <h2>Entrar</h2>
       <form id="form-login">
-        <input type="email" id="login-email" placeholder="seu@email.com" required autocomplete="email">
+        <input type="text" id="login-usuario" placeholder="usuário" required autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false">
         <input type="password" id="login-senha" placeholder="senha" required autocomplete="current-password">
         <button type="submit">Entrar</button>
       </form>
@@ -37,7 +37,7 @@
   <section id="tela-sem-acesso" class="tela" hidden>
     <div class="cartao">
       <h2>Sem acesso</h2>
-      <p>O e-mail <b id="sem-acesso-email"></b> não está cadastrado como membro.</p>
+      <p>O usuário <b id="sem-acesso-email"></b> não está cadastrado como membro.</p>
       <p class="ajuda">Peça para alguém da equipe incluir você.</p>
     </div>
   </section>
